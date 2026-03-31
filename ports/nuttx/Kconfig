@@ -1,0 +1,89 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+menu "nanoMODBUS"
+config NANOMODBUS
+	bool "Modbus support using nanoMODBUS"
+	default n
+	---help---
+		nanoMODBUS is a compact Modbus RTU/TCP C library.
+		MIT licensed, zero dynamic memory allocation.
+		https://github.com/debevv/nanoMODBUS
+
+if NANOMODBUS
+
+config NANOMODBUS_SERVER
+	bool "nanoMODBUS server (slave) support"
+	default y
+	---help---
+		Enable Modbus server (slave) functionality.
+
+if NANOMODBUS_SERVER
+
+config NANOMODBUS_SERVER_READ_COILS
+	bool "FC01 Read Coils"
+	default y
+
+config NANOMODBUS_SERVER_READ_DISCRETE_INPUTS
+	bool "FC02 Read Discrete Inputs"
+	default y
+
+config NANOMODBUS_SERVER_READ_HOLDING_REGISTERS
+	bool "FC03 Read Holding Registers"
+	default y
+
+config NANOMODBUS_SERVER_READ_INPUT_REGISTERS
+	bool "FC04 Read Input Registers"
+	default y
+
+config NANOMODBUS_SERVER_WRITE_SINGLE_COIL
+	bool "FC05 Write Single Coil"
+	default y
+
+config NANOMODBUS_SERVER_WRITE_SINGLE_REGISTER
+	bool "FC06 Write Single Register"
+	default y
+
+config NANOMODBUS_SERVER_WRITE_MULTIPLE_COILS
+	bool "FC15 Write Multiple Coils"
+	default y
+
+config NANOMODBUS_SERVER_WRITE_MULTIPLE_REGISTERS
+	bool "FC16 Write Multiple Registers"
+	default y
+
+config NANOMODBUS_SERVER_READ_WRITE_REGISTERS
+	bool "FC23 Read/Write Multiple Registers"
+	default n
+
+config NANOMODBUS_SERVER_READ_FILE_RECORD
+	bool "FC20 Read File Record"
+	default n
+
+config NANOMODBUS_SERVER_WRITE_FILE_RECORD
+	bool "FC21 Write File Record"
+	default n
+
+config NANOMODBUS_SERVER_READ_DEVICE_IDENTIFICATION
+	bool "FC43/14 Read Device Identification"
+	default n
+
+endif # NANOMODBUS_SERVER
+
+config NANOMODBUS_CLIENT
+	bool "nanoMODBUS client (master) support"
+	default y
+	---help---
+		Enable Modbus client (master) functionality.
+
+config NANOMODBUS_STRERROR
+	bool "nanoMODBUS error string support"
+	default n
+	---help---
+		Enable nmbs_strerror() for human-readable error messages.
+		Adds ~1KB of read-only string data.
+
+endif # NANOMODBUS
+endmenu # nanoMODBUS

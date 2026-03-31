@@ -1,0 +1,70 @@
+############################################################################
+# apps/nanomodbus/Makefile
+#
+# SPDX-License-Identifier: MIT
+#
+# nanoMODBUS - A compact MODBUS RTU/TCP C library for microcontrollers
+# https://github.com/debevv/nanoMODBUS
+#
+############################################################################
+
+include $(APPDIR)/Make.defs
+
+ifeq ($(CONFIG_NANOMODBUS),y)
+
+  CSRCS += nanomodbus.c
+
+  # Map Kconfig options to nanoMODBUS compile-time flags
+
+  ifneq ($(CONFIG_NANOMODBUS_SERVER),y)
+    CFLAGS += -DNMBS_SERVER_DISABLED
+  else
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_READ_COILS),y)
+      CFLAGS += -DNMBS_SERVER_READ_COILS_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_READ_DISCRETE_INPUTS),y)
+      CFLAGS += -DNMBS_SERVER_READ_DISCRETE_INPUTS_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_READ_HOLDING_REGISTERS),y)
+      CFLAGS += -DNMBS_SERVER_READ_HOLDING_REGISTERS_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_READ_INPUT_REGISTERS),y)
+      CFLAGS += -DNMBS_SERVER_READ_INPUT_REGISTERS_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_WRITE_SINGLE_COIL),y)
+      CFLAGS += -DNMBS_SERVER_WRITE_SINGLE_COIL_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_WRITE_SINGLE_REGISTER),y)
+      CFLAGS += -DNMBS_SERVER_WRITE_SINGLE_REGISTER_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_WRITE_MULTIPLE_COILS),y)
+      CFLAGS += -DNMBS_SERVER_WRITE_MULTIPLE_COILS_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_WRITE_MULTIPLE_REGISTERS),y)
+      CFLAGS += -DNMBS_SERVER_WRITE_MULTIPLE_REGISTERS_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_READ_WRITE_REGISTERS),y)
+      CFLAGS += -DNMBS_SERVER_READ_WRITE_REGISTERS_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_READ_FILE_RECORD),y)
+      CFLAGS += -DNMBS_SERVER_READ_FILE_RECORD_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_WRITE_FILE_RECORD),y)
+      CFLAGS += -DNMBS_SERVER_WRITE_FILE_RECORD_DISABLED
+    endif
+    ifneq ($(CONFIG_NANOMODBUS_SERVER_READ_DEVICE_IDENTIFICATION),y)
+      CFLAGS += -DNMBS_SERVER_READ_DEVICE_IDENTIFICATION_DISABLED
+    endif
+  endif
+
+  ifneq ($(CONFIG_NANOMODBUS_CLIENT),y)
+    CFLAGS += -DNMBS_CLIENT_DISABLED
+  endif
+
+  ifneq ($(CONFIG_NANOMODBUS_STRERROR),y)
+    CFLAGS += -DNMBS_STRERROR_DISABLED
+  endif
+
+endif
+
+include $(APPDIR)/Application.mk

@@ -1,0 +1,10 @@
+############################################################################
+# apps/nanomodbus/Make.defs
+#
+# SPDX-License-Identifier: MIT
+#
+############################################################################
+
+ifneq ($(CONFIG_NANOMODBUS),)
+CONFIGURED_APPS += $(APPDIR)/nanomodbus
+endif
